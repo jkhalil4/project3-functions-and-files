@@ -5,6 +5,8 @@
 // October 20, 2022
 */
 
+
+//iostream for basic io; fstream for file input/output; string and string.h for characters, pass by ref values; iomanip for setprecision.
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -15,7 +17,7 @@ using namespace std;
 
 
 string getDigitCode(char digit){
-
+//returns barcode for single digits
     switch(digit) {
         case 1:
             return ":::||";
@@ -52,41 +54,71 @@ string getDigitCode(char digit){
     }
 }
 
+//Calculates check digit and returns after completion
 int calcCheckDigit (int sum){
+    //checks if sum is divisible by 10
     if(sum%10 == 0);
-    return 0;
-
-return10-sum%10;
+    return 0; //returns 0 after completion
+    //calculates the check digit, then returns the result
+    return10-sum%10;
 }
+
+//this function calculates and arranges the barcode based on the inputs.
+string barcode(string code)
+{
+string barcode = "|";
+    for(unsigned i=0; i<code.size(); i++ )
+    {
+        barcode = barcode + getDigitCode(code[i]) + " ";
+        sum = sum + (code[i] - 0);
+    }
+//this function gets the check digit.
+char checkDigit = calcCheckDigit(sum) + 0;
+barcode = barcode + calcCheckDigit(checkDigit) + "|";
+
+return barcode;
+}
+
+bool isValid(string code)
+{
+    for(int i = 0; i< code.length(); i++){
+    //check if the input contains any non integers
+        if(code[i] < 0 || code[i]> 9)
+            return false;
+    }
+    return true;
+}
+//main function for reading input files in and output files out.
 int main()
 {
-    int n=0
-    while(n==0){
-        char zipCode[100];
-        int sum=0;
-        int flag=0;
-            cout << "Enter a Zip code: ";
-    if(strlen(zipCode) !=5){
-        cout << "Error: Code must be of 5 digits. " << endl;
-        flag == 0;
-            break;
-    }
-    else
+//Variables
+string inputFile;
+string outputFile;
+string code;
+ifstream fin;
+ofstream fout;
+
+//Enter input file name
+    cout << "Enter the input file name: "
+    //read input file into the program
+    cin >> inputFile;
+    //open the input file
+    fin.open(inputFile.c_str());
+    //check for integrity
+    if(!fin.is_open())
     {
-        sum+=zipCode[i] - '0';
-        flag++;
+        cout << "Invalid input file. Try checking the name of the input file and the location.\n";
+            return 1;
     }
-    continue;
+//Enter output file name
+    cout << "Enter the output file name: ";
+    //read the output file
+    cin >> outputFile;
+    //open the output file into the program
+    fout.open(outputFile.c_str());
+    //check for integrity
+    if(fout.is_open())
+    {
+        cout << "The file" << outputFile << " has been saved." << endl;
     }
-if(flag!=0){
-    cout << "Code: " << "|  ";
-    for (int i=0;i<5;i++){
-        cout << getDigitCode(zipCode[i]) << " ";
-    }
-    char c = calcCheckDigit(sum);
-        cout << getDigitCode(c + 0);
-        cout << "  |" << endl;
-}
-char pnt;
-    cout << "More Codes? y/n"
 }
