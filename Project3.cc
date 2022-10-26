@@ -121,4 +121,30 @@ ofstream fout;
     {
         cout << "The file" << outputFile << " has been saved." << endl;
     }
+while(1)
+{
+    //read a zipcode from the given input File.
+    fin>> code;
+    //check for the end of file
+    if(fin.eof()) {
+    break;
+    }
+    //check code for integrity
+    if(code.length()<5){
+        fout << left << setw(10) << "Zip code " << code << " is not 5 digits" << endl;
+    }
+    else if(code.length()>5 || !isValid(code)){
+        fout << left << setw(10) << "Illegal characters in zip code: " << code << endl;
+    }
+    //if the code is valid, this function will write the barcode to the output file
+    else{
+        fout << left << setw(10) << code << barCode(code) << endl;
+    }
+//close the files and remove from memory
+fout.close();
+fin.close();
+
+//return 0 and end the program
+return 0;
+}
 }
