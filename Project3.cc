@@ -10,7 +10,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <string.h>
 #include <iomanip>
 
 using namespace std;
@@ -19,63 +18,51 @@ using namespace std;
 string getDigitCode(char digit){
 //returns barcode for single digits
     switch(digit) {
-        case 1:
+        case '1': 
             return ":::||";
-            break;
-        case 2:
-            return " :::|:|";
-            break;
-        case 3:
+        case '2': 
+            return "::|:|";
+        case '3': 
             return "::||:";
-            break;
-         case 4:
+        case '4': 
             return ":|::|";
-            break;
-         case 5:
+        case '5': 
             return ":|:|:";
-            break;
-         case 6:
+        case '6': 
             return ":||::";
-            break;
-         case 7:
+        case '7': 
             return "|:::|";
-            break;
-         case 8:
+        case '8': 
             return "|::|:";
-            break;
-         case 9:
+        case '9': 
             return "|:|::";
-            break;
-         case 0:
+        case '0': 
             return "||:::";
-            break;
-        default:
-            cout<<"Invalid digit entered.";
     }
+    return "";
 }
 
 //Calculates check digit and returns after completion
-int calcCheckDigit (int sum){
+int calcCheckDigit(int sum){
     //checks if sum is divisible by 10
-    if(sum%10 == 0);
-    return 0; //returns 0 after completion
+if(sum%10 == 0);
+return 0; //returns 0 after completion
     //calculates the check digit, then returns the result
-    return10-sum%10;
+    return 10-sum%10;
 }
 
 //this function calculates and arranges the barcode based on the inputs.
-string barcode(string code)
+string barCode(string code)
 {
 string barcode = "|";
-    for(unsigned i=0; i<code.size(); i++ )
-    {
-        barcode = barcode + getDigitCode(code[i]) + " ";
-        sum = sum + (code[i] - 0);
+int sum = 0;
+    for(unsigned i=0; i<code.size(); i++) {
+        barcode = barcode + getDigitCode(code[i]);
+        sum = sum + (code[i]-'0');
     }
-//this function gets the check digit.
-char checkDigit = calcCheckDigit(sum) + 0;
-barcode = barcode + calcCheckDigit(checkDigit) + "|";
-
+    //calculate check digit
+    char check = calcCheckDigit(sum) + '0';
+    barcode = barcode + getDigitCode(check) + "|";
 return barcode;
 }
 
@@ -83,8 +70,8 @@ bool isValid(string code)
 {
     for(int i = 0; i< code.length(); i++){
     //check if the input contains any non integers
-        if(code[i] < 0 || code[i]> 9)
-            return false;
+        if(code[i] < '0' || code[i]> '9')
+        return false;
     }
     return true;
 }
@@ -99,7 +86,7 @@ ifstream fin;
 ofstream fout;
 
 //Enter input file name
-    cout << "Enter the input file name: "
+    cout << "Enter the input file name: ";
     //read input file into the program
     cin >> inputFile;
     //open the input file
@@ -119,7 +106,7 @@ ofstream fout;
     //check for integrity
     if(fout.is_open())
     {
-        cout << "The file" << outputFile << " has been saved." << endl;
+        cout << "The file " << outputFile << " has been saved." << endl;
     }
 while(1)
 {
@@ -131,20 +118,19 @@ while(1)
     }
     //check code for integrity
     if(code.length()<5){
-        fout << left << setw(10) << "Zip code " << code << " is not 5 digits" << endl;
+        fout << left << setw(10) << code << "Zip code is not 5 digits" << endl;
     }
     else if(code.length()>5 || !isValid(code)){
-        fout << left << setw(10) << "Illegal characters in zip code: " << code << endl;
+        fout << left << setw(10) << code << "Illegal Characters in ZipCode!" << endl;
     }
     //if the code is valid, this function will write the barcode to the output file
-    else{
+    else
         fout << left << setw(10) << code << barCode(code) << endl;
-    }
+}
 //close the files and remove from memory
 fout.close();
 fin.close();
 
 //return 0 and end the program
 return 0;
-}
 }

@@ -1,0 +1,9 @@
+45701     |:|::|:|:|:|:::|||::::::||||:::|
+4570      Zip code is not 5 digits
+45710     |:|::|:|:|:|:::|:::||||:::||:::|
+457012    Illegal Characters in ZipCode!
+12345     |:::||::|:|::||::|::|:|:|:||:::|
+457-0     Illegal Characters in ZipCode!
+abcde     Illegal Characters in ZipCode!
+10001     |:::||||:::||:::||::::::||||:::|
+94016     ||:|:::|::|||::::::||:||::||:::|
